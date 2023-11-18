@@ -1,24 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Exchange from './components/Exchanges/Exchanges';
+import { getExchanges } from './actions/exchange.action';
+import { useFetchList } from './hooks/useFetchList';
+import Loader from './components/Loader/Loader';
 
 function App() {
+  const { loading, error } = useFetchList('exchanges/', getExchanges);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {error && <li>Error: {error}</li>}
+      {loading && <Loader />}
+      <Exchange />
     </div>
   );
 }
