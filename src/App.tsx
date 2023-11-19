@@ -1,16 +1,16 @@
-import Exchange from './components/Exchanges/Exchanges';
-import { getExchanges } from './actions/exchange.action';
 import { useFetchList } from './hooks/useFetchList';
 import Loader from './components/Loader/Loader';
+import Cryptos from './components/Cryptos/Cryptos';
+import { getCryptos } from './actions/crypto.action';
+import { getExchanges } from './actions/exchange.action';
+import Exchanges from './components/Exchanges/Exchanges';
 
 function App() {
-  const { loading, error } = useFetchList('exchanges/', getExchanges);
-
   return (
     <div className="App">
-      {error && <li>Error: {error}</li>}
-      {loading && <Loader />}
-      <Exchange />
+      <Cryptos />
+      <br />
+      <Exchanges />
     </div>
   );
 }
