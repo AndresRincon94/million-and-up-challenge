@@ -1,4 +1,4 @@
- import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { getCryptos } from "../../actions/crypto.action";
@@ -6,8 +6,9 @@ import Loader from "../Loader/Loader";
 
 import { ICryptoStore } from "./ICrypto";
 import cryptoStyle, { ITableData } from "./Cryptos.style";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFetchPagination } from "../../hooks/useFetchPagination";
+import Pagination from "../Pagination/Pagination";
 
 const CryptoTable = styled.table`${cryptoStyle.table}`;
 const CryptoTableBody = styled.tbody`${cryptoStyle.tableBody}`;
@@ -15,43 +16,42 @@ const CryptoTableHeader = styled.thead`${cryptoStyle.tableHeader}`;
 const CryptoTableData = styled.td<ITableData>`${cryptoStyle.tableData}`;
 
 function Cryptos() {
-  const [ startPage, setStartPage ] = useState(0)
-  const [ limitPage, setLimitPage ] = useState(10)
+  const [startPage, setStartPage] = useState(0);
+  const [pageLimit, setPageLimit] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
   const { loading, error } = useFetchPagination(
-    `tickers/?start=${startPage}&limit=${limitPage}`,
+    `tickers/?start=${startPage}&limit=${pageLimit}`,
     getCryptos,
     startPage,
-    limitPage
+    pageLimit
   );
-  const { cryptos, info } = useSelector((state: ICryptoStore) => state.getCryptos);
+  const { cryptos, info } = useSelector(
+    (state: ICryptoStore) => state.getCryptos
+  );
 
-  const nextPage = useCallback(() => {
-    setStartPage((prev) => prev + limitPage)
-  }, [limitPage]);
+  const nextPage = useCallback(
+    (page: number) => {
+      setStartPage(page);
+    },
+    [pageLimit]
+  );
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(info.coins_num / pageLimit));
+  }, [info.coins_num, pageLimit]);
 
   if (error) return <span>Error: {error}</span>;
 
   if (loading) return <Loader />;
 
   return (
-    <>
-      <p>Coins number: {info.coins_num}</p>
-      <p>Time: {info.time}</p>
-      <button onClick={nextPage}>Next</button>
-      <select
-        className="form-control"
-        value={limitPage}
-        onChange={e =>
-          setLimitPage(parseInt(e.target.value))
-        }
-      >
-        <option value={5}>5</option>
-        <option value={10}>10</option>
-        <option value={25}>25</option>
-        <option value={50}>50</option>
-        <option value={100}>100</option>
-      </select>
-      <br />
+    <Pagination
+      initialPage={startPage}
+      pageLimit={pageLimit}
+      totalRecords={info.coins_num}
+      setInitialPage={setStartPage}
+      setPageLimit={setPageLimit}
+    >
       <CryptoTable>
         <CryptoTableHeader>
           <tr>
@@ -66,21 +66,27 @@ function Cryptos() {
           </tr>
         </CryptoTableHeader>
         <CryptoTableBody>
-          {cryptos?.map((item, i) => (
-            <tr>
+          {cryptos?.map((item) => (
+            <tr key={`coin-${item.id}`}>
               <td>{item.rank}</td>
               <td>{item.name}</td>
-              <td>$ {item.price_usd}</td>
+              <td>${item.price_usd}</td>
               <td>{item.price_btc}</td>
               <td>{item.market_cap_usd}</td>
-              <CryptoTableData valueData={item.percent_change_1h}>{item.percent_change_1h}</CryptoTableData>
-              <CryptoTableData valueData={item.percent_change_24h}>{item.percent_change_24h}</CryptoTableData>
-              <CryptoTableData valueData={item.percent_change_7d}>{item.percent_change_7d}</CryptoTableData>
+              <CryptoTableData value={item.percent_change_1h}>
+                {item.percent_change_1h}
+              </CryptoTableData>
+              <CryptoTableData value={item.percent_change_24h}>
+                {item.percent_change_24h}
+              </CryptoTableData>
+              <CryptoTableData value={item.percent_change_7d}>
+                {item.percent_change_7d}
+              </CryptoTableData>
             </tr>
           ))}
         </CryptoTableBody>
       </CryptoTable>
-    </>
+    </Pagination>
   );
 }
 
