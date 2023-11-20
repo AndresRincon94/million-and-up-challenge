@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Cryptos />
       <br />
-      <Exchanges />
+      {/* <Exchanges /> */}
     </div>
   );
 }

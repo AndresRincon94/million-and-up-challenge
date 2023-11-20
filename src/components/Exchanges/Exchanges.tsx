@@ -16,8 +16,8 @@ function Exchanges() {
   
   return (
     <Grid>
-      {exchanges?.map((item, i) => (
-        <Card title={item.name}/>
+      {exchanges?.map((item) => (
+        <Card title={item.name} key={`exchange-card-${item.id}`}/>
       ))}
     </Grid>
   );
