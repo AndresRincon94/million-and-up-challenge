@@ -78,4 +78,4 @@ describe('UseFetchPagination', () => {
       expect(result.current).toEqual(expect.objectContaining(/Error: Internal server error/));
     });
   });
-})
+});
