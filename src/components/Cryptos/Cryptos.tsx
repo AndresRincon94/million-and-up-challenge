@@ -1,58 +1,51 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { getCryptos } from "../../actions/crypto.action";
 import Loader from "../Loader/Loader";
+import Pagination from "../Pagination/Pagination";
+import { getCryptos } from "../../actions/crypto/crypto.action";
+import useFetchPagination from "../../hooks/useFetchPagination";
 
 import { ICryptoStore } from "./ICrypto";
 import cryptoStyle, { ITableData } from "./Cryptos.style";
-import { useCallback, useEffect, useState } from "react";
-import { useFetchPagination } from "../../hooks/useFetchPagination";
-import Pagination from "../Pagination/Pagination";
 
 const CryptoTable = styled.table`${cryptoStyle.table}`;
 const CryptoTableBody = styled.tbody`${cryptoStyle.tableBody}`;
 const CryptoTableHeader = styled.thead`${cryptoStyle.tableHeader}`;
 const CryptoTableData = styled.td<ITableData>`${cryptoStyle.tableData}`;
 
+/**
+ * Render the table with cryptos data
+ */
 function Cryptos() {
-  const [startPage, setStartPage] = useState(0);
+  const [startRecord, setStartRecord] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
-  const [totalPages, setTotalPages] = useState(1);
-  const { loading, error } = useFetchPagination(
-    `tickers/?start=${startPage}&limit=${pageLimit}`,
-    getCryptos,
-    startPage,
+  const { loading, error } = useFetchPagination({
+    endPoint: `tickers/?start=${startRecord}&limit=${pageLimit}`,
+    callbackPayload: getCryptos,
+    startRecord,
     pageLimit
-  );
+  });
   const { cryptos, info } = useSelector(
     (state: ICryptoStore) => state.getCryptos
   );
 
-  const nextPage = useCallback(
-    (page: number) => {
-      setStartPage(page);
-    },
-    [pageLimit]
-  );
-
-  useEffect(() => {
-    setTotalPages(Math.ceil(info.coins_num / pageLimit));
-  }, [info.coins_num, pageLimit]);
-
-  if (error) return <span>Error: {error}</span>;
+  if (error !== null) return <span>Error: {error}</span>;
 
   if (loading) return <Loader />;
 
+  if(!cryptos || cryptos.length === 0) return <h3>No records found</h3>;
+
   return (
     <Pagination
-      initialPage={startPage}
+      startRecord={startRecord}
       pageLimit={pageLimit}
-      totalRecords={info.coins_num}
-      setInitialPage={setStartPage}
+      totalRecords={info?.coins_num}
+      setStartRecord={setStartRecord}
       setPageLimit={setPageLimit}
     >
-      <CryptoTable>
+      <CryptoTable aria-label="crypto-table">
         <CryptoTableHeader>
           <tr>
             <th>Rank</th>

@@ -3,7 +3,7 @@ import { IExchangeStore } from "./IExchange";
 import Card from "../Card/Card";
 import Grid from "../Grid/Grid";
 import { useFetchList } from "../../hooks/useFetchList";
-import { getExchanges } from "../../actions/exchange.action";
+import { getExchanges } from "../../actions/exchange/exchange.action";
 import Loader from "../Loader/Loader";
 
 function Exchanges() {
