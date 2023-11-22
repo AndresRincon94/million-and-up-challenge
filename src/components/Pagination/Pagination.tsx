@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import styled from "styled-components";
 
-import IPagination from "./IPagination";
+import IPagination, { IPaginationState } from "./IPagination";
 import paginationStyle from "./Pagination.style";
+import { TOTAL_PAGES } from "../../constants/constants";
 
 const PaginationHeader = styled.div`${paginationStyle.header}`;
 const PaginationLeftHeader = styled.div`${paginationStyle.leftHeader}`;
@@ -11,36 +12,35 @@ const PaginationFooter = styled.div`${paginationStyle.footer}`;
 const PaginationWrapper = styled.ul`${paginationStyle.wrapper}`;
 const PaginationItem = styled.li`${paginationStyle.item}`;
 
+/**
+ * Render the Pagination component
+ * 
+ * @param IPagination.children - React children node
+ * @param IPagination.startRecord - Index of first record to be paged
+ * @param IPagination.pageLimit - Number of records for page
+ * @param IPagination.totalRecords - Number of total records to be paged
+ * @param IPagination.setPageLimit - Callback for set fetch pageLimit
+ * @param IPagination.setStartRecord - Callback for set fetch startRecord
+ */
 function Pagination({
-  totalRecords,
-  pageLimit,
-  initialPage,
-  setPageLimit,
-  setInitialPage,
   children,
+  startRecord,
+  pageLimit,
+  totalRecords,
+  setPageLimit,
+  setStartRecord,
 }: IPagination) {
-  const [state, setState] = useState({
+  const [state, setState] = useState<IPaginationState>({
     totalPages: Math.ceil(totalRecords / pageLimit),
     currentPage: 1,
-    pagesToShow: 6,
+    pagesToShow: TOTAL_PAGES,
   });
 
-  const onChangeLimitHandler = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      const newLimit = parseInt(e.target.value);
-      setPageLimit(newLimit);
-      const total = Math.ceil(totalRecords / newLimit);
-      setState({
-        ...state,
-        totalPages: Math.ceil(total),
-      });
-    },
-    [pageLimit, state, setState]
-  );
-
-  const setPage = useCallback(
-    (page: any) => {
-      const { totalPages } = state;
+  /**
+   * Set active page
+   */
+  const setPage = useCallback((page: number, fallbackState?: IPaginationState) => {
+      const { totalPages } = fallbackState || state;
 
       if (page < 1) {
         page = 1;
@@ -50,17 +50,33 @@ function Pagination({
 
       setState({
         ...state,
+        totalPages,
         currentPage: page,
       });
 
-      setInitialPage((page - 1) * pageLimit);
-    },
-    [initialPage, pageLimit, state.totalPages]
+      setStartRecord((page - 1) * pageLimit);
+    }, [startRecord, pageLimit, state.totalPages]
   );
 
+  /**
+   * Set new page limit and update the active page
+   */
+  const onChangeLimitHandler = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+      const newLimit = parseInt(e.target.value);
+      const total = Math.ceil(totalRecords / newLimit);
+      const currentPage = state.currentPage > total ? total : state.currentPage;
+
+      setPageLimit(newLimit);
+      setPage(state.currentPage, { totalPages: total } as IPaginationState);
+      setStartRecord((currentPage - 1) * newLimit);
+    }, [pageLimit, state, startRecord]
+  );
+
+  /**
+   * Get page numbers to show in the paginator component
+   */
   const getPager = useCallback(() => {
     let { pagesToShow, currentPage, totalPages } = state;
-    const pages = [];
     let startFromNumber = 0;
 
     if (totalPages <= pagesToShow) {
@@ -69,25 +85,29 @@ function Pagination({
     } else {
       if (currentPage <= Math.ceil(pagesToShow / 2)) {
         startFromNumber = 1;
-      } else if (
-        currentPage + Math.floor((pagesToShow - 1) / 2) >=
-        totalPages
-      ) {
+      } else if (currentPage + Math.floor((pagesToShow - 1) / 2) >= totalPages) {
         startFromNumber = totalPages - (pagesToShow - 1);
       } else {
         startFromNumber = currentPage - Math.floor(pagesToShow / 2);
       }
     }
 
-    for (let i = 1; i <= pagesToShow; i++) {
-      pages.push(startFromNumber++);
-    }
+    /**
+     * Build the page numbers array
+     */
+    const pages = Array.from(
+      { length: (pagesToShow) },
+      (_value, index) => startFromNumber + index
+    );
 
     return {
       pages,
     };
   }, [state]);
 
+  /**
+   * Early return if data is empty
+   */
   if (!totalRecords || state.totalPages === 1) return null;
 
   const { pages } = getPager();
@@ -100,6 +120,7 @@ function Pagination({
           <PaginationLimit
             value={pageLimit}
             onChange={onChangeLimitHandler}
+            aria-label="pagination-limit"
           >
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -110,18 +131,20 @@ function Pagination({
           <span>Records</span>
         </PaginationLeftHeader>
         <div>
-          <p>
-            {totalRecords} Records | Showing {state.currentPage}/{state.totalPages}
-          </p>
+          <span aria-label="pagination-info">
+            {totalRecords} Records | Showing {state.currentPage}/
+            {state.totalPages}
+          </span>
         </div>
       </PaginationHeader>
       {children}
       <PaginationFooter>
-        <PaginationWrapper>
+        <PaginationWrapper aria-label="pagination-items">
           <PaginationItem>
             <button
               disabled={state.currentPage === 1 ? true : false}
               onClick={() => setPage(1)}
+              aria-label="first-page"
             >
               First
             </button>
@@ -130,15 +153,17 @@ function Pagination({
             <button
               disabled={state.currentPage === 1 ? true : false}
               onClick={() => setPage(state.currentPage - 1)}
+              aria-label="before-page"
             >
               Before
             </button>
           </PaginationItem>
-          {pages.map((page: any, index: number) => (
+          {pages.map((page: number, index: number) => (
             <PaginationItem key={`pagination-item-${index}`}>
               <button
                 className={state.currentPage === page ? "active" : ""}
                 onClick={() => setPage(page)}
+                aria-label={`go-to-page-${page}`}
               >
                 {page}
               </button>
@@ -148,6 +173,7 @@ function Pagination({
             <button
               disabled={state.currentPage === state.totalPages ? true : false}
               onClick={() => setPage(state.currentPage + 1)}
+              aria-label="next-page"
             >
               Next
             </button>
@@ -156,6 +182,7 @@ function Pagination({
             <button
               disabled={state.currentPage === state.totalPages ? true : false}
               onClick={() => setPage(state.totalPages)}
+              aria-label="last-page"
             >
               Last
             </button>

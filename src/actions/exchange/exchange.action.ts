@@ -4,6 +4,9 @@ const initialState = {
   exchanges: []
 }
 
+/**
+ * Create slice with the custom exchange reducers
+ */
 export const exchangeSlice = createSlice({
   name: 'exchange',
   initialState,

@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import { ICryptoSelector } from "../../components/Cryptos/ICrypto";
+
 const initialState = {
   cryptos: [],
   info: {}
-}
+} as unknown as ICryptoSelector;
 
+/**
+ * Create slice with the custom crypto reducers
+ */
 export const cryptoSlice = createSlice({
   name: 'crypto',
   initialState,

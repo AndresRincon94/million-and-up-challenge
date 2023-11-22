@@ -8,7 +8,7 @@ function Grid({
   children,
 }: ICard) {
   return (
-    <GridWrapper>
+    <GridWrapper id="Grid">
       {children}
     </GridWrapper>
   )
