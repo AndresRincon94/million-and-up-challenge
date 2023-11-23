@@ -17,7 +17,7 @@ const rotationFrames = css`
       transform: rotate(-360deg);
     }
   }
-`
+`;
 const loaderStyle = {
   wrapper: css`
     width: 100%;
@@ -55,6 +55,6 @@ const loaderStyle = {
       transform-origin: center center;
     }
   `
-}
+};
 
 export default loaderStyle;

@@ -1,4 +1,5 @@
 import { configureStore, combineReducers, PreloadedState } from '@reduxjs/toolkit';
+
 import exchangeReducer from '../actions/exchange/exchange.action';
 import cryptoReducer from '../actions/crypto/crypto.action';
 
@@ -16,8 +17,8 @@ const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState
-  })
-}
+  });
+};
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppStore = ReturnType<typeof setupStore>

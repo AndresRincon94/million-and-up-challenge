@@ -1,12 +1,13 @@
+import React from 'react';
 import { screen } from '@testing-library/react';
-import * as redux from 'react-redux'
-
-import Cryptos from './Cryptos';
-import ICryptoSelector from './ICrypto';
+import * as redux from 'react-redux';
 
 import { cryptosDefaultMock } from '../../__mocks__/cryptos.mock';
 import * as useFetchPaginationModule from '../../hooks/useFetchPagination';
 import { renderWithProviders } from '../../utils/testUtils';
+
+import Cryptos from './Cryptos';
+import ICryptoSelector from './ICrypto';
 
 jest.mock('react-redux', () => ({
     ...jest.requireActual('react-redux'),
@@ -24,12 +25,12 @@ describe('Cryptos', () => {
   it('should render the crypto table with data', () => {
     jest.spyOn(redux, 'useSelector').mockImplementation(() => cryptosDefaultMock);
     jest.spyOn(useFetchPaginationModule, 'default')
-      .mockImplementation(() => ({ loading: false, error: null }))
+      .mockImplementation(() => ({ loading: false, error: null }));
 
     renderWithProviders(
       <Cryptos />,
       {preloadedState: { getCryptos: cryptosDefaultMock }}
-    )
+    );
 
     const cryptoTableElement = screen.getByLabelText('crypto-table');
     const cryptoTableBody = cryptoTableElement.lastElementChild;
@@ -42,12 +43,12 @@ describe('Cryptos', () => {
     const emptyRecords = {} as ICryptoSelector;
     jest.spyOn(redux, 'useSelector').mockImplementation(() => emptyRecords);
     jest.spyOn(useFetchPaginationModule, 'default')
-      .mockImplementation(() => ({ loading: false, error: null }))
+      .mockImplementation(() => ({ loading: false, error: null }));
 
     renderWithProviders(
       <Cryptos />,
       {preloadedState: { getCryptos: undefined }}
-    )
+    );
 
     const cryptoTableElement = screen.queryByLabelText('crypto-table');
 
@@ -58,12 +59,12 @@ describe('Cryptos', () => {
   it('should render loader if fetch is loading', () => {
     jest.spyOn(redux, 'useSelector').mockImplementation(() => cryptosDefaultMock);
     jest.spyOn(useFetchPaginationModule, 'default')
-      .mockImplementation(() => ({ loading: true, error: null }))
+      .mockImplementation(() => ({ loading: true, error: null }));
 
     renderWithProviders(
       <Cryptos />,
       {preloadedState: { getCryptos: cryptosDefaultMock }}
-    )
+    );
 
     const loaderElement = screen.getByLabelText('loader');
     expect(loaderElement).toBeInTheDocument();
@@ -73,12 +74,12 @@ describe('Cryptos', () => {
     const emptyRecords = {} as ICryptoSelector;
     jest.spyOn(redux, 'useSelector').mockImplementation(() => emptyRecords);
     jest.spyOn(useFetchPaginationModule, 'default')
-      .mockImplementation(() => ({ loading: true, error: "Internal server error" }))
+      .mockImplementation(() => ({ loading: true, error: 'Internal server error' }));
 
     renderWithProviders(
       <Cryptos />,
       {preloadedState: { getCryptos: undefined }}
-    )
+    );
 
     const errorElement = screen.getByText(/Internal server error/);
     expect(errorElement).toBeInTheDocument();
