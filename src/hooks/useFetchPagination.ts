@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import objectToArray from "../utils/objectToArray";
-import { API_URL } from "../constants/constants";
+import objectToArray from '../utils/objectToArray';
+import { API_URL } from '../constants/constants';
 
-import { IUseFetchPagination } from "./IUseFetch";
+import { IUseFetchPagination } from './IUseFetch';
 
 /**
  * Hook to fetch data paginated
@@ -14,7 +14,6 @@ import { IUseFetchPagination } from "./IUseFetch";
  * @param IUseFetch.startPage - Start record of api url complement
  * @param IUseFetch.endPoint - Api url complement 
  * @param IUseFetch.pageLimit - Page limit of api url complement
- * @returns 
  */
 function useFetchPagination({
   callbackPayload,

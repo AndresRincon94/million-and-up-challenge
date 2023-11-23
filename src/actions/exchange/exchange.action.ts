@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   exchanges: []
-}
+};
 
 /**
  * Create slice with the custom exchange reducers

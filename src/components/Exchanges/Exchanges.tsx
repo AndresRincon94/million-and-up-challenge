@@ -1,13 +1,15 @@
-import { useSelector } from "react-redux";
-import { IExchangeStore } from "./IExchange";
-import Card from "../Card/Card";
-import Grid from "../Grid/Grid";
-import { useFetchList } from "../../hooks/useFetchList";
-import { getExchanges } from "../../actions/exchange/exchange.action";
-import Loader from "../Loader/Loader";
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { IExchangeStore } from './IExchange';
+import Card from '../Card/Card';
+import Grid from '../Grid/Grid';
+import { useFetchList } from '../../hooks/useFetchList';
+import { getExchanges } from '../../actions/exchange/exchange.action';
+import Loader from '../Loader/Loader';
 
 function Exchanges() {
-  const { loading, error } = useFetchList('exchanges/', getExchanges);
+  const { loading, error } = useFetchList({endPoint: 'exchanges/', callbackPayload: getExchanges});
   const { exchanges } = useSelector((state: IExchangeStore) => state.getExchanges);
 
   if (error) return <span>Error: {error}</span>;

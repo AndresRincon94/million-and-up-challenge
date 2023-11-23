@@ -1,6 +1,6 @@
-import cryptosResponseMock, { cryptosResponseArrayMock } from "../__mocks__/cryptos.mock";
+import cryptosResponseMock, { cryptosResponseArrayMock } from '../__mocks__/cryptos.mock';
 
-import objectToArray from "./objectToArray";
+import objectToArray from './objectToArray';
 
 describe('objectToArray', () => {
   it('should return the default data', () => {

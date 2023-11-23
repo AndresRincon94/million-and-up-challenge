@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from 'styled-components';
 
 export interface ITableData {
   value: string;
@@ -35,6 +35,6 @@ const cryptoStyle = {
     color: ${Number(value) >= 0 ? '#16c784' : '#ea3943'};
     font-weight: bold;
   `)
-}
+};
 
 export default cryptoStyle;

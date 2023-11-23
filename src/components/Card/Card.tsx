@@ -1,6 +1,8 @@
-import styled from "styled-components"
-import cardStyle from "./Card.style";
-import ICard from "./ICard";
+import React from 'react';
+import styled from 'styled-components';
+
+import cardStyle from './Card.style';
+import ICard from './ICard';
 
 const CardWrapper = styled.div`${cardStyle.wrapper}`;
 
@@ -11,7 +13,7 @@ function Card({
     <CardWrapper>
       <span>Name: {title}</span>
     </CardWrapper>
-  )
+  );
 }
 
 export default Card;

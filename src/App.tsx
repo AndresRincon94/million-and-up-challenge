@@ -1,3 +1,4 @@
+import React from 'react';
 import Cryptos from './components/Cryptos/Cryptos';
 
 /**

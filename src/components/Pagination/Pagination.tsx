@@ -1,9 +1,9 @@
-import { ChangeEvent, useCallback, useState } from "react";
-import styled from "styled-components";
+import React, { ChangeEvent, useCallback, useState } from 'react';
+import styled from 'styled-components';
 
-import IPagination, { IPaginationState } from "./IPagination";
-import paginationStyle from "./Pagination.style";
-import { TOTAL_PAGES } from "../../constants/constants";
+import IPagination, { IPaginationState } from './IPagination';
+import paginationStyle from './Pagination.style';
+import { TOTAL_PAGES } from '../../constants/constants';
 
 const PaginationHeader = styled.div`${paginationStyle.header}`;
 const PaginationLeftHeader = styled.div`${paginationStyle.leftHeader}`;
@@ -76,7 +76,8 @@ function Pagination({
    * Get page numbers to show in the paginator component
    */
   const getPager = useCallback(() => {
-    let { pagesToShow, currentPage, totalPages } = state;
+    const { currentPage, totalPages } = state;
+    let { pagesToShow } = state;
     let startFromNumber = 0;
 
     if (totalPages <= pagesToShow) {
@@ -161,7 +162,7 @@ function Pagination({
           {pages.map((page: number, index: number) => (
             <PaginationItem key={`pagination-item-${index}`}>
               <button
-                className={state.currentPage === page ? "active" : ""}
+                className={state.currentPage === page ? 'active' : ''}
                 onClick={() => setPage(page)}
                 aria-label={`go-to-page-${page}`}
               >

@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from 'styled-components';
 
 const cardStyle = {
   wrapper: css`
@@ -7,6 +7,6 @@ const cardStyle = {
     padding: 10px;
     width: 20%;
   `
-}
+};
 
 export default cardStyle;

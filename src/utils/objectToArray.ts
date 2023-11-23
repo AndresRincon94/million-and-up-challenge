@@ -4,9 +4,9 @@
  * @param obj - Base object to change
  */
 function objectToArray(obj: object) {
-  if (!obj) return obj
+  if (!obj) return obj;
 
-  return Object.assign([], Object.values(obj))
+  return Object.assign([], Object.values(obj));
 }
 
 export default objectToArray;

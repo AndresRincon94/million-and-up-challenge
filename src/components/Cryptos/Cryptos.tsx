@@ -1,14 +1,15 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import styled from "styled-components";
+import React from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import Loader from "../Loader/Loader";
-import Pagination from "../Pagination/Pagination";
-import { getCryptos } from "../../actions/crypto/crypto.action";
-import useFetchPagination from "../../hooks/useFetchPagination";
+import Loader from '../Loader/Loader';
+import Pagination from '../Pagination/Pagination';
+import { getCryptos } from '../../actions/crypto/crypto.action';
+import useFetchPagination from '../../hooks/useFetchPagination';
 
-import { ICryptoStore } from "./ICrypto";
-import cryptoStyle, { ITableData } from "./Cryptos.style";
+import { ICryptoStore } from './ICrypto';
+import cryptoStyle, { ITableData } from './Cryptos.style';
 
 const CryptoTable = styled.table`${cryptoStyle.table}`;
 const CryptoTableBody = styled.tbody`${cryptoStyle.tableBody}`;

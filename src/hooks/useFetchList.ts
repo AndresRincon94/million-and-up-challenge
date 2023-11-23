@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
-import objectToArray from "../utils/objectToArray";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-const API_URL = "https://api.coinlore.net/api/";
+import objectToArray from '../utils/objectToArray';
 
-export function useFetchList(endPoint: string, callback: any) {
+import { IUseFetchList } from './IUseFetch';
+import { API_URL } from '../constants/constants';
+
+export function useFetchList({ endPoint, callbackPayload }: IUseFetchList) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +15,7 @@ export function useFetchList(endPoint: string, callback: any) {
   useEffect(() => {
     fetch(url)
       .then((response) => response.json())
-      .then((json) => dispatch(callback(objectToArray(json))))
+      .then((json) => dispatch(callbackPayload(objectToArray(json))))
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }, []);
