@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loader from '../Loader/Loader';
@@ -9,17 +10,21 @@ import { getCryptos } from '../../actions/crypto/crypto.action';
 import useFetchPagination from '../../hooks/useFetchPagination';
 
 import { ICryptoStore } from './ICrypto';
-import cryptoStyle, { ITableData } from './Cryptos.style';
+import cryptoStyle, { ITableDataStyle } from './Cryptos.style';
+import { setCurrentCrypto } from '../../actions/market/market.action';
 
 const CryptoTable = styled.table`${cryptoStyle.table}`;
 const CryptoTableBody = styled.tbody`${cryptoStyle.tableBody}`;
 const CryptoTableHeader = styled.thead`${cryptoStyle.tableHeader}`;
-const CryptoTableData = styled.td<ITableData>`${cryptoStyle.tableData}`;
+const CryptoTableData = styled.td<ITableDataStyle>`${cryptoStyle.tableData}`;
+const CryptoTableButton = styled.button`${cryptoStyle.button}`;
 
 /**
  * Render the table with cryptos data
  */
 function Cryptos() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [startRecord, setStartRecord] = useState(0);
   const [pageLimit, setPageLimit] = useState(10);
   const { loading, error } = useFetchPagination({
@@ -28,9 +33,15 @@ function Cryptos() {
     startRecord,
     pageLimit
   });
+
   const { cryptos, info } = useSelector(
     (state: ICryptoStore) => state.getCryptos
   );
+
+  const onSelectCrypto = useCallback((name: string, currentId: string) => {
+    dispatch(setCurrentCrypto({name, currentId}));
+    navigate('/exchanges');
+  }, []);
 
   if (error !== null) return <span>Error: {error}</span>;
 
@@ -57,6 +68,7 @@ function Cryptos() {
             <th>1h %</th>
             <th>24h %</th>
             <th>7d %</th>
+            <th>Action</th>
           </tr>
         </CryptoTableHeader>
         <CryptoTableBody>
@@ -76,6 +88,9 @@ function Cryptos() {
               <CryptoTableData value={item.percent_change_7d}>
                 {item.percent_change_7d}
               </CryptoTableData>
+              <td>
+                <CryptoTableButton onClick={() => onSelectCrypto(item.name, item.id)}>Exchanges</CryptoTableButton>
+              </td>
             </tr>
           ))}
         </CryptoTableBody>

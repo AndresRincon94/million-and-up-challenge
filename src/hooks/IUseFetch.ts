@@ -11,3 +11,9 @@ export interface IUseFetchList {
   endPoint: string;
   callbackPayload: ActionCreatorWithPayload<unknown, string>;
 }
+
+export interface IUseFetchListWithRefetch {
+  endPoint: string;
+  callbackPayload: ActionCreatorWithPayload<unknown, string>;
+  callbackPayloadRefetch: ActionCreatorWithPayload<unknown, string>;
+}
