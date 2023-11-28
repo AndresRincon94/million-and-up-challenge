@@ -1,3 +1,5 @@
+import IMarket from '../Markets/IMarket';
+
 interface IExchange {
   id: number,
   name: string,
@@ -8,12 +10,28 @@ interface IExchange {
   country: string
 }
 
+interface IExchangeData {
+  id: number;
+  name: string;
+  date_live: Date;
+  url: string;
+}
+
+interface IExchangeDetail {
+  data: IExchangeData;
+  pairs: IMarket[];
+}
+
 export interface IExchangeSelector {
   exchanges: IExchange[];
+  currentExchange: IExchangeDetail;
+  currentPairsFiltered: IMarket[];
+  currentExchangeId: number;
+  currentExchangeName: string;
 }
 
 export interface IExchangeStore {
-  getExchanges: IExchangeSelector;
+  getExchange: IExchangeSelector;
 }
 
 export default IExchange;

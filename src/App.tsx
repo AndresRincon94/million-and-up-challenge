@@ -1,5 +1,6 @@
 import React from 'react';
-import Cryptos from './components/Cryptos/Cryptos';
+
+import GlobalStyle from './GlobalStyle';
 
 /**
  * App default component
@@ -7,9 +8,7 @@ import Cryptos from './components/Cryptos/Cryptos';
 function App() {
   return (
     <div className="App">
-      <Cryptos />
-      <br />
-      {/* <Exchanges /> */}
+      <GlobalStyle />
     </div>
   );
 }

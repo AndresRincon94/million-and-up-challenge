@@ -2,10 +2,17 @@ import { configureStore, combineReducers, PreloadedState } from '@reduxjs/toolki
 
 import exchangeReducer from '../actions/exchange/exchange.action';
 import cryptoReducer from '../actions/crypto/crypto.action';
+import marketReducer from '../actions/market/market.action';
 
 const rootReducer = combineReducers({
-  getExchanges: exchangeReducer,
+  getExchange: exchangeReducer,
+  getExchangeDetail: exchangeReducer,
+  setCurrentExchange: exchangeReducer,
+  setFilterExchange: exchangeReducer,
   getCryptos: cryptoReducer,
+  getMarketsByCrypto: marketReducer,
+  setCurrentCrypto: marketReducer,
+  setFilterMarket: marketReducer,
 });
 
 /**

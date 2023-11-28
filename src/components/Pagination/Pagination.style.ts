@@ -2,9 +2,12 @@ import { css } from 'styled-components';
 
 const paginationStyle = {
   header: css`
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-top: 10px;
+}
   `,
   leftHeader: css`
     align-items: center;
