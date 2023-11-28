@@ -3,7 +3,7 @@ import { ICryptoSelector } from '../../components/Cryptos/ICrypto';
 
 import cryptoReducer, { getCryptos } from './crypto.action';
 
-describe('Crypto Action', () => {
+describe('CryptoAction', () => {
   it('should return the initial state', () => {
     expect(cryptoReducer(undefined, { type: undefined })).toEqual({
       cryptos: [], info: {}

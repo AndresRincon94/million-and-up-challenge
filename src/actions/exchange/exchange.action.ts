@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import IExchange, { IExchangeSelector } from '../../components/Exchanges/IExchange';
+import IExchange, { IExchangeSelector } from '../../components/Exchange/IExchange';
 
 const initialState = {
   currentExchange: {},
@@ -21,16 +21,16 @@ export const exchangeSlice = createSlice({
       state.currentExchangeId = exchanges.find((ex) => (ex.name === state.currentExchangeName))?.id || 0;
     },
     getExchangeDetail: (state, action) => {
-      state.currentExchange.data = action.payload[0];
-      state.currentExchange.pairs = action.payload[1];
-      state.currentPairsFiltered = action.payload[1];
+      state.currentExchange.data = action.payload?.[0];
+      state.currentExchange.pairs = action.payload?.[1];
+      state.currentPairsFiltered = action.payload?.[1];
     },
     setCurrentExchange: (state, action) => {
       state.currentExchangeName = action.payload;
     },
     setFilterExchange: (state, action) => {
       const searchFilter = new RegExp(action.payload, 'i');
-      state.currentPairsFiltered = state.currentExchange.pairs.filter((p) => (
+      state.currentPairsFiltered = state.currentExchange?.pairs?.filter((p) => (
         searchFilter.test(p.base)
         || searchFilter.test(p.quote)
       ));

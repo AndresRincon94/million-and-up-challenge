@@ -7,6 +7,11 @@ const exchangeStyle = {
     flex-wrap: wrap;
     justify-content: space-between;
   `,
+  rightHeader: css`
+    align-items: center;
+    display: flex;
+    gap: 10px;
+  `,
   link: css`
     text-decoration: none;
   `

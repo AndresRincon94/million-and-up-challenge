@@ -10,7 +10,12 @@ function Search({
   onChangeHandler,
 }: ISearch) {
   return (
-    <SearchInput type='text' onChange={onChangeHandler} placeholder="Search.." />
+    <SearchInput
+      type='text'
+      placeholder="Search.."
+      aria-label='Search input'
+      onChange={onChangeHandler}
+    />
   );
 }
 

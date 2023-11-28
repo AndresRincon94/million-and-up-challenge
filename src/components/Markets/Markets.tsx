@@ -7,15 +7,17 @@ import Grid from '../Grid/Grid';
 import Search from '../Search/Search';
 import Loader from '../Loader/Loader';
 import MarketCard from '../MarketCard/MarketCard';
-import { useFetchList } from '../../hooks/useFetchList';
+import useFetchList from '../../hooks/useFetchList';
 import { HeaderTitle } from '../../constants/constants';
 import { getMarketsByCrypto, setFilterMarket } from '../../actions/market/market.action';
 
 import { IMarketStore } from './IMarket';
 import marketStyle from './Market.style';
 import { setCurrentExchange } from '../../actions/exchange/exchange.action';
+import BackButton from '../BackButton/BackButton';
 
 const MarketHeader = styled.div`${marketStyle.header}`;
+const ExchangeRightHeader = styled.div`${marketStyle.rightHeader}`;
 const CardButton = styled.button`${marketStyle.cardButton}`;
 
 function Markets() {
@@ -42,7 +44,10 @@ function Markets() {
   return (
     <>
       <MarketHeader>
-        <HeaderTitle>{currentCryptoName} exchanges</HeaderTitle>
+        <ExchangeRightHeader>
+          <BackButton />
+          <HeaderTitle>{currentCryptoName} exchanges</HeaderTitle>
+        </ExchangeRightHeader>
         <Search onChangeHandler={onChangeSearch} />
       </MarketHeader>
       <Grid>
