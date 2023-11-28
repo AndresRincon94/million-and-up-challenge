@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Getting Started the project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Clone this repository and run the command `npm install`
 
 ## Available Scripts
 
@@ -13,6 +13,30 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+## `Views`
+
+## Cryptos paginated List
+
+![image](https://github.com/AndresRincon94/million-and-up-challenge/assets/44625127/cf55d1ca-b32b-4fdc-a797-8039f5c6fc12)
+
+## Exchange by crypto
+
+![image](https://github.com/AndresRincon94/million-and-up-challenge/assets/44625127/f2b71930-afe2-43e2-8487-56669a9fd498)
+
+## Exchange by crypto filtered
+
+![image](https://github.com/AndresRincon94/million-and-up-challenge/assets/44625127/97137f59-21c4-47da-ba01-77d8b3ab25f5)
+
+## Exchange detail
+
+![image](https://github.com/AndresRincon94/million-and-up-challenge/assets/44625127/cda30dfd-1361-49a0-8c22-247c54f6fc85)
+
+## Exchange detail filtered
+
+![image](https://github.com/AndresRincon94/million-and-up-challenge/assets/44625127/45f7be79-4ea2-43a1-8969-068669a4f562)
+
+
 
 ### `npm test`
 
