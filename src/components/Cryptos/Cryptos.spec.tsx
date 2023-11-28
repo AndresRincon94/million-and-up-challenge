@@ -15,9 +15,6 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('Cryptos', () => {
-  beforeEach(() => {
-  });
-
   afterEach(() => {
     jest.restoreAllMocks();
   });

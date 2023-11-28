@@ -7,6 +7,11 @@ const marketStyle = {
     flex-wrap: wrap;
     justify-content: space-between;
   `,
+  rightHeader: css`
+    align-items: center;
+    display: flex;
+    gap: 10px;
+  `,
   cardButton: css`
     background: none;
     border: none;

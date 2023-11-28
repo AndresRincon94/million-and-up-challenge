@@ -7,7 +7,7 @@ import GlobalStyle from './GlobalStyle';
  */
 function App() {
   return (
-    <div className="App">
+    <div aria-label='app'>
       <GlobalStyle />
     </div>
   );

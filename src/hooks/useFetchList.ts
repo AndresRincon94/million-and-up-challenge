@@ -6,10 +6,10 @@ import objectToArray from '../utils/objectToArray';
 import { IUseFetchList } from './IUseFetch';
 import { API_URL } from '../constants/constants';
 
-export function useFetchList({ endPoint, callbackPayload }: IUseFetchList) {
+function useFetchList({ endPoint, callbackPayload }: IUseFetchList) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const url = API_URL + endPoint;
 
   useEffect(() => {
@@ -22,3 +22,5 @@ export function useFetchList({ endPoint, callbackPayload }: IUseFetchList) {
 
   return { loading, error };
 }
+
+export default useFetchList;

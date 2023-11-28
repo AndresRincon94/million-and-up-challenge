@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Cryptos from './components/Cryptos/Cryptos';
-import Exchanges from './components/Exchanges/Exchanges';
+import Exchange from './components/Exchange/Exchange';
 import Markets from './components/Markets/Markets';
 
 /**
@@ -13,7 +13,7 @@ function DefaultRouter() {
     <Routes>
       <Route index element={<Cryptos />} />
       <Route path="exchanges" element={<Markets />} />
-      <Route path="detail" element={<Exchanges />} />
+      <Route path="detail" element={<Exchange />} />
     </Routes>
   );
 }

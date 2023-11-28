@@ -10,7 +10,7 @@ function Grid({
   children,
 }: ICard) {
   return (
-    <GridWrapper id="Grid">
+    <GridWrapper aria-label="grid">
       {children}
     </GridWrapper>
   );

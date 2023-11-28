@@ -10,20 +10,18 @@ interface IExchange {
   country: string
 }
 
-interface IExchangeData {
-  id: number;
+export interface IExchangeData {
   name: string;
-  date_live: Date;
+  date_live: string;
   url: string;
 }
 
-interface IExchangeDetail {
+export interface IExchangeDetail {
   data: IExchangeData;
   pairs: IMarket[];
 }
 
 export interface IExchangeSelector {
-  exchanges: IExchange[];
   currentExchange: IExchangeDetail;
   currentPairsFiltered: IMarket[];
   currentExchangeId: number;

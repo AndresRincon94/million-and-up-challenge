@@ -32,11 +32,11 @@ function MarketCard({
         <CardHeader>{title}</CardHeader>
       )}
       {market && (
-        <CardBody>
+        <CardBody aria-label='card-detail'>
           <TextFull><span>Base: </span>{market.base}</TextFull>
           <TextFull><span>Quote: </span>{market.quote}</TextFull>
-          <TextFull><span>Price: </span>${market.price_usd.toFixed(2)}</TextFull>
-          <TextFull><span>Vol:</span>{market.volume.toFixed(2)}</TextFull>
+          <TextFull><span>Price: </span>${market.price_usd?.toFixed(2)}</TextFull>
+          <TextFull><span>Vol:</span>{market.volume?.toFixed(2)}</TextFull>
         </CardBody>
       )}
     </CardWrapper>
