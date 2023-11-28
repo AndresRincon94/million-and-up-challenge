@@ -39,7 +39,7 @@ const loaderStyle = {
     ${rotationFrames}
 
     &::after {
-      content: "";
+      content: '';
       box-sizing: border-box;
       position: absolute;
       left: 0;
