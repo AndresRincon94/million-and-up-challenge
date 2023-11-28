@@ -6,6 +6,12 @@ import ISearch from './ISearch';
 
 const SearchInput = styled.input`${searchStyle.searchInput}`;
 
+/**
+ * Render the Search input
+ *
+ * @param ISearch - Search props 
+ * @param ISearch.onChangeHandler - Callback when user change the input value
+ */
 function Search({
   onChangeHandler,
 }: ISearch) {

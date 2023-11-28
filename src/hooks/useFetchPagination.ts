@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import logger from 'loglevel';
 
 import objectToArray from '../utils/objectToArray';
 import { API_URL } from '../constants/constants';
@@ -9,11 +10,11 @@ import { IUseFetchPagination } from './IUseFetch';
 /**
  * Hook to fetch data paginated
  *
- * @param IUseFetch - UseFetchPagination props
- * @param IUseFetch.callbackPayload - Callback the payload action
- * @param IUseFetch.startPage - Start record of api url complement
- * @param IUseFetch.endPoint - Api url complement 
- * @param IUseFetch.pageLimit - Page limit of api url complement
+ * @param IUseFetchPagination - UseFetchPagination props
+ * @param IUseFetchPagination.endPoint - Api url complement 
+ * @param IUseFetchPagination.callbackPayload - Callback the payload action
+ * @param IUseFetchPagination.startPage - Start record of api url complement
+ * @param IUseFetchPagination.pageLimit - Page limit of api url complement
  */
 function useFetchPagination({
   callbackPayload,
@@ -30,7 +31,10 @@ function useFetchPagination({
     fetch(url)
       .then((response) => response.json())
       .then((json) => dispatch(callbackPayload(objectToArray(json))))
-      .catch((error) => setError(error))
+      .catch((error) => {
+        logger.error(error);
+        setError(error);
+      })
       .finally(() => setLoading(false));
   }, [startRecord, pageLimit]);
 

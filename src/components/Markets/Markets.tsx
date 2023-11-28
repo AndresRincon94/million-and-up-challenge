@@ -15,11 +15,15 @@ import { IMarketStore } from './IMarket';
 import marketStyle from './Market.style';
 import { setCurrentExchange } from '../../actions/exchange/exchange.action';
 import BackButton from '../BackButton/BackButton';
+import Error from '../Error/Error';
 
 const MarketHeader = styled.div`${marketStyle.header}`;
 const ExchangeRightHeader = styled.div`${marketStyle.rightHeader}`;
 const CardButton = styled.button`${marketStyle.cardButton}`;
 
+/**
+ * Render the Markets list component
+ */
 function Markets() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +41,7 @@ function Markets() {
     navigate('/detail');
   }, []);
 
-  if (error) return <span>Error: {error}</span>;
+  if (error) return <Error message={error} />;  
 
   if (loading) return <Loader />;
   
