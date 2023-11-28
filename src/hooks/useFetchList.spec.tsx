@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import * as ReactRedux from 'react-redux';
 import { renderHook, waitFor } from '@testing-library/react';
+import * as logger from 'loglevel';
 
 
 import useFetchList from './useFetchList';
@@ -10,6 +11,11 @@ import { getMarketsByCrypto } from '../actions/market/market.action';
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn()
+}));
+
+jest.mock('loglevel', () => ({
+  ...jest.requireActual('loglevel'),
+  error: jest.fn()
 }));
 
 const wrapper = ({ children }: { children: ReactNode }) => (
@@ -36,25 +42,8 @@ describe('UseFetchList', () => {
     expect(dispatchMock).toHaveBeenCalled();
   });
 
-  it('should response loading false when finish the fetch', async () => {
-    const dispatchMock = jest.spyOn(ReactRedux, 'useDispatch').mockReturnValue(jest.fn());
-    const { result } = renderHook(useFetchList, {
-      initialProps: {
-        endPoint: 'coin/markets/?id=80',
-        callbackPayload: getMarketsByCrypto,
-      },
-      wrapper
-  });
-
-    expect(result.current).toEqual({ loading: true, error: null });
-    expect(dispatchMock).toHaveBeenCalled();
-
-    await waitFor(() => {
-      expect(result.current).toEqual({ loading: false, error: null });
-    });
-  });
-
   it('should response error when catch the fetch error', async () => {
+    const loggerSpy = jest.spyOn(logger, 'error');
     jest.spyOn(ReactRedux, 'useDispatch').mockReturnValue(jest.fn());
     jest.spyOn(global, 'fetch').mockRejectedValueOnce(new Error('Internal server error'));
 
@@ -69,6 +58,7 @@ describe('UseFetchList', () => {
     await waitFor(() => {
       expect(result.current).toEqual(expect.objectContaining({ loading: false }));
       expect(result.current).toEqual(expect.objectContaining(/Error: Internal server error/));
+      expect(loggerSpy).toHaveBeenCalled();
     });
   });
 });

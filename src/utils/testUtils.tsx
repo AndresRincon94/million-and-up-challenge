@@ -14,6 +14,12 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   store?: AppStore
 }
 
+/**
+ * Function to render the components wrapped with the provider and the router in the UTs.
+ * 
+ * @param ui - Component to render
+ * @param prop - The render options including the store setup
+ */
 export function renderWithProviders(
   ui: React.ReactElement,
   {

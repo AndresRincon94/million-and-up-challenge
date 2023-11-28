@@ -13,6 +13,7 @@ import Search from '../Search/Search';
 import { IExchangeStore } from './IExchange';
 import exchangeStyle from './Exchange.style';
 import BackButton from '../BackButton/BackButton';
+import Error from '../Error/Error';
 
 const ExchangeHeader = styled.div`${exchangeStyle.header}`;
 const ExchangeRightHeader = styled.div`${exchangeStyle.rightHeader}`;
@@ -32,7 +33,7 @@ function Exchange() {
     dispatch(setFilterExchange(e.target.value));
   }, []);
 
-  if (error || detailError) return <span>Error: {error}{detailError}</span>;
+  if (error || detailError) return <Error message={error || detailError} />;
 
   if (loading || detailLoading) return <Loader />;
 

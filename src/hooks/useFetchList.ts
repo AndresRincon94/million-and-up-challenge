@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import logger from 'loglevel';
 
 import objectToArray from '../utils/objectToArray';
 
 import { IUseFetchList } from './IUseFetch';
 import { API_URL } from '../constants/constants';
 
+/**
+ * Hook to fetch data
+ *
+ * @param IUseFetchList - UseFetchPagination props
+ * @param IUseFetchList.endPoint - Api url complement
+ * @param IUseFetchList.callbackPayload - Callback the payload action
+ */
 function useFetchList({ endPoint, callbackPayload }: IUseFetchList) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -16,7 +24,10 @@ function useFetchList({ endPoint, callbackPayload }: IUseFetchList) {
     fetch(url)
       .then((response) => response.json())
       .then((json) => dispatch(callbackPayload(objectToArray(json))))
-      .catch((error) => setError(error))
+      .catch((error) => {
+        logger.error(error);
+        setError(error);
+      })
       .finally(() => setLoading(false));
   }, []);
 

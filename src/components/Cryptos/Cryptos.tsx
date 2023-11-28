@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Loader from '../Loader/Loader';
+import Error from '../Error/Error';
 import Pagination from '../Pagination/Pagination';
 import { getCryptos } from '../../actions/crypto/crypto.action';
 import useFetchPagination from '../../hooks/useFetchPagination';
@@ -43,7 +44,7 @@ function Cryptos() {
     navigate('/exchanges');
   }, []);
 
-  if (error !== null) return <span>Error: {error}</span>;
+  if (error !== null) return <Error message={error} />;
 
   if (loading) return <Loader />;
 

@@ -15,6 +15,7 @@
     "@typescript-eslint/parser": "^6.12.0",
     "eslint": "^8.54.0",
     "eslint-plugin-react": "^7.33.2",
+    "loglevel": "^1.8.1",
     "or": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test a",
     "lint": "npx eslint src/**/*",
     "eject": "react-scripts eject"
   },

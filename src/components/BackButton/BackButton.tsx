@@ -7,6 +7,9 @@ import backButtonStyle from './BackButton.style';
 
 const BackButtonComponent = styled.a`${backButtonStyle.button}`;
 
+/**
+ * Render the Back button
+ */
 function BackButton() {
   const navigate = useNavigate();
 
